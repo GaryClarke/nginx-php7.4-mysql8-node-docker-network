@@ -26,10 +26,13 @@ services:
             context: .
             dockerfile: ./php/Dockerfile
         container_name: php74-container
+        extra_hosts:
+            - "host.docker.internal:host-gateway"
         ports:
             - "9000:9000"
         volumes:
             - ./app:/var/www/project
+            - ./php/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
         networks:
             - nginx-php74-mysql8-node
 
@@ -44,6 +47,7 @@ services:
         command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
         restart: always # always restart unless stopped manually
         environment:
+            MYSQL_USER: root
             MYSQL_ROOT_PASSWORD: secret
             MYSQL_PASSWORD: secret
         networks:
