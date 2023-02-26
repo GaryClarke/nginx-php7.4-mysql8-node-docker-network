@@ -15,17 +15,17 @@ services:
             - ./app:/var/www/project
             - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
         depends_on:
-            - php74-service
+            - php8-service
             - mysql8-service
         networks:
             - nginx-php74-mysql8-node
 
     # php
-    php74-service:
+    php8-service:
         build:
             context: .
             dockerfile: ./php/Dockerfile
-        container_name: php74-container
+        container_name: php8-container
         extra_hosts:
             - "host.docker.internal:host-gateway"
         ports:
